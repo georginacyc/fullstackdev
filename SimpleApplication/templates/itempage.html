@@ -1,0 +1,60 @@
+{% extends "staffbase.html" %}
+{% block title %}View Item{% endblock %}
+{% block content %}
+<h1 class="display-4">Items</h1>
+<hr>
+<nav  class="navbar navbar-expand-lg bg-light">
+    <ul class="navbar-nav mr-auto">
+        <li class="disabled">
+            <a class="nav-link" style="text-decoration: underline;font-weight:bold" > view items</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/createItem"> create item</a>
+        </li>
+    </ul>
+</nav>
+
+<div>
+    {% if count == 0 %}
+    <p>There are no items.</p>
+    {% elif count == 1 %}
+    <p>There is 1 item.</p>
+    {% else %}
+    <p>There are {{ count }} items.</p>
+    {% endif %}
+</div>
+
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                 <th>Item Name</th>
+                 <th>Item Serial</th>
+                 <th>Item Category</th>
+                 <th>Item Gender</th>
+                 <th>Item Cost</th>
+                 <th>Item Price</th>
+                 <th></th>
+                 <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in itemList %}
+                <tr>
+                     <td>{{ item.get_itemName() }}</td>
+                     <td>{{ item.get_itemSerial() }}</td>
+                     <td>{{ item.get_itemCategory() }}</td>
+                     <td>{{ item.get_itemGender() }}</td>
+                     <td>${{ item.get_itemCost() }}</td>
+                     <td>${{ item.get_itemPrice() }}</td>
+                     <td><a href="/updateItem/{{item.get_itemSerial()}}" class="btn btn-warning">Update</a></td>
+                     <td><form action= "{{url_for('deleteItem', id=item.get_itemSerial())}}" method="POST">
+                            <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">
+                        </form></td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

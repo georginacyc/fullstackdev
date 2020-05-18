@@ -1,0 +1,58 @@
+{% extends "staffBase.html" %}
+{% block title %}View Stock Orders{% endblock %}
+{% block content %}
+<h1 class="display-4">Inventory</h1>
+<hr>
+<nav  class="navbar navbar-expand-lg bg-light">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="/viewStock"> view stock on hand</a>
+        </li>
+        <li class="disabled">
+            <a class="nav-link" style="text-decoration: underline;font-weight:bold"> view stock orders</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/createStockOrder"> order stock</a>
+        </li>
+    </ul>
+</nav>
+<hr>
+<div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Order Number</th>
+            <th>Order Date</th>
+            <th>Item Ordered</th>
+            <th>Ordered Quantity</th>
+            <th>Shipment Date</th>
+            <th>Shipment Status</th>
+            <th>Received Date</th>
+            <th>Shipment Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for stockorder in stockorderList %}
+        <tr>
+            <td>{{ stockorder.get_stockorderNumber() }}</td>
+            <td>{{ stockorder.get_stockorderDate() }}</td>
+            <td>{{ stockorder.get_stockItemSerial() }}</td>
+            <td>{{ stockorder.get_stockorderQuantity() }}</td>
+            <td>{{ stockorder.get_shipmentDate() }}</td>
+            <td>{{ stockorder.get_shipmentStatus() }}</td>
+            <td>{{ stockorder.get_receivedDate() }}</td>
+            {% if stockorder.get_shipmentStatus() == "Received" %}
+            <td>
+                Received
+            </td>
+            {% else %}
+            <td><a href="/updateStockOrder/{{stockorder.get_stockorderNumber()}}" class="btn btn-info">Receive Order</a>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

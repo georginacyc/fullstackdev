@@ -1,0 +1,35 @@
+{% extends "staffBase.html" %}
+{% block title %}Inventory{% endblock %}
+{% block content %}
+{% include 'includes/_staffInventoryNav.html' %}
+<hr>
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>S/N</th>
+                <th>Order Number</th>
+                <th>Order Date</th>
+                <th>Shipment Date</th>
+                <th>Shipment Status</th>
+                <th>Received Date</th>
+                <th>Shipment Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stockorder in stockorderList %}
+                <tr>
+                     <td>{{ StockOrder.get_stockorderCount() }}</td>
+                     <td>{{ StockOrder.get_stockorderNumber() }}</td>
+                     <td>{{ StockOrder.get_stockorderDate() }}</td>
+                     <td>{{ StockOrder.get_shipmentDate() }}</td>
+                     <td>{{ StockOrder.get_shipmentStatus() }}</td>
+                     <td>{{ StockOrder.get_receivedDate() }}</td>
+                     <td><a href="/updateItem/{{item.get_itemSerial()}}" class="btn btn-info">Receive Order</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
